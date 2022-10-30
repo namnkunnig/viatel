@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import FilmDetails from '../components/FilmDetails'
 import FilmList from '../components/FilmList'
 import TextInput from '../components/TextInput'
-import { Film } from '../interfaces/apis'
+import { Film, FilmLong } from '../interfaces/apis'
 
 export default function FilmPage() {
   const [query, setQuery] = useState('a')
   const [selected, setSelected] = useState(0)
   const [films, setFilms] = useState<[Film] | []>([])
+  const [film, setFilm] = useState<FilmLong | undefined>()
 
   useEffect(() => {
     if (query === '') {
@@ -23,6 +24,18 @@ export default function FilmPage() {
       })
   }, [query])
 
+  useEffect(() => {
+    if (selected === 0) {
+      setFilms([])
+      return
+    }
+    fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`)
+      .then((result) => result.json())
+      .then((data) => {
+        setFilm(data as FilmLong)
+      })
+  }, [selected])
+
   const movieList = films.slice(0, 15).filter((film) => film.title.toLowerCase().includes(query.toLowerCase()))
   return (
     <main className="bg-slate-100 text-black">
@@ -32,7 +45,7 @@ export default function FilmPage() {
         <div className="flex-1">
           <FilmList movies={movieList} setSelected={setSelected} />
         </div>
-        <FilmDetails film={movieList.filter((film) => film.id === selected).pop()} />
+        <FilmDetails film={film} />
       </div>
     </main>
   )
