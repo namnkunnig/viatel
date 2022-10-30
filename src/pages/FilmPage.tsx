@@ -45,7 +45,9 @@ export default function FilmPage() {
         <div className="flex-1">
           <FilmList movies={movieList} setSelected={setSelected} />
         </div>
-        <FilmDetails film={film} />
+        <div className="flex-1 pt-1">
+          <FilmDetails film={film} />
+        </div>
       </div>
     </main>
   )
