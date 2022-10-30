@@ -5,7 +5,7 @@ import TextInput from '../components/TextInput'
 import { Film, FilmLong } from '../interfaces/apis'
 
 export default function FilmPage() {
-  const [query, setQuery] = useState('a')
+  const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(0)
   const [films, setFilms] = useState<[Film] | []>([])
   const [film, setFilm] = useState<FilmLong | undefined>()
