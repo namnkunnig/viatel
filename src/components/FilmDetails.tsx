@@ -1,12 +1,21 @@
+import { Film } from '../interfaces/apis'
+
 export default function FilmDetails({ film }: FilmDetailsProps) {
   return (
     <>
-      <div>{film && film.title}</div>
-      <div>{film && film.id}</div>
+      {film && (
+        <section className="flex-1 p-4">
+          <header className="mb-4 pt-4 text-3xl font-bold">
+            {film && film.title} ({film.release_date.slice(0, 4)})
+          </header>
+          <h1 className="mb-2 font-bold">Overview</h1>
+          <div>{film && film.overview}</div>
+        </section>
+      )}
     </>
   )
 }
 
 interface FilmDetailsProps {
-  film: { id: number; title: string } | undefined
+  film: Film | undefined
 }

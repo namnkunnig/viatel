@@ -1,9 +1,12 @@
+import { Film } from '../interfaces/apis'
+
 export default function FilmList({ movies, setSelected }: FilmListProps) {
   return (
-    <ul className="pl-10">
-      {movies.map((film: { id: number; title: string }) => (
-        <li onClick={() => setSelected(film.id)} key={film.id} className={`cursor-pointer`}>
-          {film.title}
+    <ul className="w-full overflow-hidden pl-10">
+      {movies.map((film) => (
+        <li onClick={() => setSelected(film.id)} key={film.id} className={`h-30 m-2 cursor-pointer rounded-lg border-[1px] border-gray-300 p-2 shadow-md`}>
+          <h2 className="p-2 font-bold">{film.title}</h2>
+          <p className="h-14 p-2 line-clamp-2">{film.overview}</p>
         </li>
       ))}
     </ul>
@@ -11,6 +14,6 @@ export default function FilmList({ movies, setSelected }: FilmListProps) {
 }
 
 interface FilmListProps {
-  movies: { id: number; title: string }[]
+  movies: Film[]
   setSelected: React.Dispatch<React.SetStateAction<number>>
 }
