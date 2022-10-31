@@ -21,7 +21,7 @@ export default function FilmPage() {
   const movieList = films.slice(0, 15).filter((film) => film.title.toLowerCase().includes(query.toLowerCase()))
   return (
     <div className="flex w-full justify-center">
-      <main className="w-[1000px] bg-transparent text-black">
+      <main className="w-[1200px] bg-transparent text-black">
         <TextInput label="Search" name="query" onChange={(value) => setQuery(value)} />
         <div className="columns-2 gap-10 pt-10">
           <div className="flex-1">

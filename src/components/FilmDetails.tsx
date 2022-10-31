@@ -4,7 +4,7 @@ export default function FilmDetails({ film }: FilmDetailsProps) {
   return (
     <>
       {film && (
-        <section className="mt-1 mr-12 flex-1 rounded-lg border-[1px] border-gray-300 bg-white p-8 shadow-md">
+        <section className="flex-1 rounded-lg border-[1px] border-gray-300 bg-white p-8 shadow-md">
           <header className="mb-2 pt-4 text-3xl font-bold">
             {film && film.title} ({film.release_date.slice(0, 4)})
           </header>
