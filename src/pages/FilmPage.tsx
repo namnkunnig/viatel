@@ -42,13 +42,8 @@ export default function FilmPage() {
       setFilm(null)
       return
     }
-    fetch(`https://api.themoviedb.org/3/search/movie?api_key=26f1011b4b59a06ef4254f92497037b5&query=${query}`)
-      .then((result) => result.json())
-      .then((data) => {
-        if (data.results) {
-          setFilms(data.results)
-        }
-      })
+    const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=26f1011b4b59a06ef4254f92497037b5&query=${query}`).then((result) => result.json())
+    setFilms(data.results as [Film])
   }
 
   async function updateFilmDetails() {
@@ -56,10 +51,7 @@ export default function FilmPage() {
       setFilms([])
       return
     }
-    fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`)
-      .then((result) => result.json())
-      .then((data) => {
-        setFilm(data as FilmLong)
-      })
+    const data = await fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`).then((result) => result.json())
+    setFilm(data as FilmLong)
   }
 }
