@@ -52,6 +52,7 @@ export default function FilmPage() {
       return
     }
     const data = await fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`).then((result) => result.json())
+    console.log(data)
     setFilm(data as FilmLong)
   }
 }
