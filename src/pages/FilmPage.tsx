@@ -8,32 +8,14 @@ export default function FilmPage() {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(0)
   const [films, setFilms] = useState<[Film] | []>([])
-  const [film, setFilm] = useState<FilmLong | undefined>()
+  const [film, setFilm] = useState<FilmLong | null>(null)
 
   useEffect(() => {
-    if (query === '') {
-      setFilms([])
-      return
-    }
-    fetch(`https://api.themoviedb.org/3/search/movie?api_key=26f1011b4b59a06ef4254f92497037b5&query=${query}`)
-      .then((result) => result.json())
-      .then((data) => {
-        if (data.results) {
-          setFilms(data.results)
-        }
-      })
+    updateFilmList()
   }, [query])
 
   useEffect(() => {
-    if (selected === 0) {
-      setFilms([])
-      return
-    }
-    fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`)
-      .then((result) => result.json())
-      .then((data) => {
-        setFilm(data as FilmLong)
-      })
+    updateFilmDetails()
   }, [selected])
 
   const movieList = films.slice(0, 15).filter((film) => film.title.toLowerCase().includes(query.toLowerCase()))
@@ -51,4 +33,31 @@ export default function FilmPage() {
       </div>
     </main>
   )
+
+  async function updateFilmList() {
+    if (query === '') {
+      setFilms([])
+      setFilm(null)
+      return
+    }
+    fetch(`https://api.themoviedb.org/3/search/movie?api_key=26f1011b4b59a06ef4254f92497037b5&query=${query}`)
+      .then((result) => result.json())
+      .then((data) => {
+        if (data.results) {
+          setFilms(data.results)
+        }
+      })
+  }
+
+  async function updateFilmDetails() {
+    if (selected === 0) {
+      setFilms([])
+      return
+    }
+    fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`)
+      .then((result) => result.json())
+      .then((data) => {
+        setFilm(data as FilmLong)
+      })
+  }
 }
