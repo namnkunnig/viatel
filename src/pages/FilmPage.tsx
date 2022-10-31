@@ -20,18 +20,20 @@ export default function FilmPage() {
 
   const movieList = films.slice(0, 15).filter((film) => film.title.toLowerCase().includes(query.toLowerCase()))
   return (
-    <main className="bg-slate-100 text-black">
-      <div className="fixed -z-10 h-screen w-full bg-slate-100"></div>
-      <TextInput label="Search" name="query" onChange={(value) => setQuery(value)} />
-      <div className="columns-2 gap-10 pt-10">
-        <div className="flex-1">
-          <FilmList movies={movieList} setSelected={setSelected} />
+    <div className="flex w-full justify-center">
+      <main className="w-[1000px] bg-transparent text-black">
+        <TextInput label="Search" name="query" onChange={(value) => setQuery(value)} />
+        <div className="columns-2 gap-10 pt-10">
+          <div className="flex-1">
+            <FilmList movies={movieList} setSelected={setSelected} />
+          </div>
+          <div className="flex-1 pt-1">
+            <FilmDetails film={film} />
+          </div>
         </div>
-        <div className="flex-1 pt-1">
-          <FilmDetails film={film} />
-        </div>
-      </div>
-    </main>
+      </main>
+      <div className="fixed -z-10 h-screen w-full bg-slate-200"></div>
+    </div>
   )
 
   async function updateFilmList() {

@@ -1,7 +1,7 @@
 export default function TextInput({ name, label, className, onChange }: { name: string; label: string; className?: string; onChange: (value: string) => void }) {
   return (
-    <div className={`${className} pt-4 pl-4`}>
-      <div className={`relative flex items-end border-b-2 text-blue-900 focus-within:border-blue-300 `} onClick={focusInput}>
+    <div className={`${className} w-full py-4 pl-4`}>
+      <div className={`relative flex items-end border-b-2 border-slate-500 text-black focus-within:border-blue-300 `} onClick={focusInput}>
         <input
           name={name}
           onChange={(e) => onChange(e.target.value)}
