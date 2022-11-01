@@ -15,7 +15,7 @@ export interface Film {
 	vote_count:        number;
 }
 
-export interface FilmLong {
+export interface Details {
 	adult:                 boolean;
 	backdrop_path:         string;
 	belongs_to_collection: BelongsToCollection;
@@ -71,4 +71,41 @@ export interface SpokenLanguage {
 	english_name: string;
 	iso_639_1:    string;
 	name:         string;
+}
+
+export interface Credits {
+	id:   number;
+	cast: Cast[];
+	crew: Cast[];
+}
+
+export interface Cast {
+	adult:                boolean;
+	gender:               number;
+	id:                   number;
+	known_for_department: Department;
+	name:                 string;
+	original_name:        string;
+	popularity:           number;
+	profile_path:         null | string;
+	cast_id?:             number;
+	character?:           string;
+	credit_id:            string;
+	order?:               number;
+	department?:          Department;
+	job?:                 string;
+}
+
+export enum Department {
+	Acting = "Acting",
+	Art = "Art",
+	Camera = "Camera",
+	CostumeMakeUp = "Costume & Make-Up",
+	Crew = "Crew",
+	Directing = "Directing",
+	Editing = "Editing",
+	Production = "Production",
+	Sound = "Sound",
+	VisualEffects = "Visual Effects",
+	Writing = "Writing",
 }

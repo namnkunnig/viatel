@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import FilmDetails from '../components/FilmDetails'
 import FilmList from '../components/FilmList'
 import TextInput from '../components/TextInput'
-import { Film, FilmLong } from '../interfaces/apis'
+import { Film, Credits, Details } from '../interfaces/apis'
 
 export default function FilmPage() {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(0)
   const [films, setFilms] = useState<[Film] | []>([])
-  const [film, setFilm] = useState<FilmLong | null>(null)
+  const [details, setDetails] = useState<Details | null>(null)
+  const [credits, setCredits] = useState<Credits | null>(null)
 
   useEffect(() => {
     updateFilmList()
@@ -23,12 +24,12 @@ export default function FilmPage() {
     <div className="flex w-full justify-center">
       <main className="w-[1200px] bg-transparent text-black">
         <TextInput label="Search" name="query" onChange={(value) => setQuery(value)} />
-        <div className="columns-2 gap-10 pt-10">
-          <div className="flex-1">
+        <div className="grid grid-cols-2 gap-10 pt-10">
+          <div className="col-span-1">
             <FilmList movies={movieList} setSelected={setSelected} />
           </div>
-          <div className="flex-1 pt-1">
-            <FilmDetails film={film} />
+          <div className="col-span-1">
+            <FilmDetails details={details} credits={credits} />
           </div>
         </div>
       </main>
@@ -39,7 +40,7 @@ export default function FilmPage() {
   async function updateFilmList() {
     if (query === '') {
       setFilms([])
-      setFilm(null)
+      setDetails(null)
       return
     }
     const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=26f1011b4b59a06ef4254f92497037b5&query=${query}`).then((result) => result.json())
@@ -51,7 +52,11 @@ export default function FilmPage() {
       setFilms([])
       return
     }
-    const data = await fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`).then((result) => result.json())
-    setFilm(data as FilmLong)
+    const detailsPromise = fetch(`https://api.themoviedb.org/3/movie/${selected}?api_key=26f1011b4b59a06ef4254f92497037b5`).then((result) => result.json())
+    const creditsPromise = fetch(`https://api.themoviedb.org/3/movie/${selected}/credits?api_key=26f1011b4b59a06ef4254f92497037b5`).then((result) => result.json())
+    const [detailsResult, creditsResult] = await Promise.all([detailsPromise, creditsPromise])
+
+    setDetails(detailsResult as Details)
+    setCredits(creditsResult as Credits)
   }
 }
